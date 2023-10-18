@@ -16,7 +16,7 @@ CREATE TABLE board(
 	title CHAR(100) NOT NULL,
 	content CHAR(100) NOT NULL,
 	regDate DATETIME NOT NULL,
-	writer CHAR(100) NOT NULL
+	userId INT NOT NULL
 );
 
 CREATE TABLE `member`(
@@ -32,36 +32,41 @@ INSERT INTO board
 SET title = "테스트 제목입니다1.",
 content = "테스트 내용입니다1.",
 regDate = now(),
-writer = "홍길동";
+userId = 1;
 
 INSERT INTO board
 SET title = "테스트 제목입니다2.",
 content = "테스트 내용입니다2.",
 regDate = now(),
-writer = "길동무";
+userId = 2;
 
 INSERT INTO `member`
 SET name = "홍길동",
 `password` = 123456,
 email = "test1@naver.com";
 
-INSERT INTO member
+INSERT INTO `member`
 SET name = "길동무",
 `password` = 123456,
 email = "test2@naver.com";
 
+INSERT INTO member
+SET name = "비회원",
+`password` = 0,
+email = "";
+
 ### 각 테이블을 JOIN 을 통하여 합치는 sql
 SELECT * FROM board
 INNER JOIN `member`
-ON board.writer = `member`.name; 
+ON board.userId = `member`.id; 
 
 ### 비회원으로 작성된 (게시글 테이블의 회원 id가 없는 경우) 케이스를 추가하고 이를 left join 을 통해서 출력하는sql
 INSERT INTO board
 SET title = "테스트 제목입니다3.",
 content = "테스트 내용입니다3.",
 regDate = now(),
-writer = "비회원";
+userId = 3;
 
 SELECT * FROM board
 LEFT JOIN `member`
-ON board.writer = `member`.name; 
+ON board.userId = `member`.id; 
