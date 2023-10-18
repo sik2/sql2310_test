@@ -8,11 +8,30 @@
 5. 각 테이블의 id 값은 고유해야하며, 비어있으면 안된다.
 
 ## 제출 
-
 ### 테이블 생성 sql
+DROP DATABASE IF EXISTS service;
+CREATE DATABASE service;
+USE service;
+
+
+CREATE TABLE `member`(
+id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+loginId CHAR(50) NOT NULL,
+loginPw VARCHAR(100) NOT NULL,
+mail CHAR(100) NOT NULL
+)
+
+CREATE TABLE post (
+id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+postId CHAR(100) NOT NULL,
+post NOT NULL,
+regDate DATETIME NOT NULL,
+poster_loginId INT
+)
 
 
 ### 테이블에 각각 테스트 데이터 2개씩 넣는 sql
+
 
 ### 각 테이블을 JOIN 을 통하여 합치는 sql
 
