@@ -10,13 +10,81 @@
 ## 제출 
 
 ### 테이블 생성 sql
+CREATE DATABASE a5;
+USE a5;
+
+CREATE TABLE board(
+id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+PRIMARY KEY(id),
+regDate DATETIME NOT NULL,
+title CHAR(100) NOT NULL,
+text TEXT NOT NULL,
+user CHAR(100) NOT NULL,
+userEmail TEXT NOT NULL UNIQUE 
+);
+
+DROP TABLE board;
+DESC board;
+SELECT *  FROM board;
+
+CREATE TABLE mem(
+id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+PRIMARY KEY(id),
+name CHAR(100) NOT NULL,
+passWord TEXT NOT NULL UNIQUE,
+userEmail TEXT NOT NULL UNIQUE
+);
+
+SELECT * FROM mem;	
 
 
 ### 테이블에 각각 테스트 데이터 2개씩 넣는 sql
 
+INSERT INTO board
+SET regDate = NOW(),
+	title = '질문',
+	text = '질문있습니다.',
+	user = '홍길동',
+	userEmail = 'ghdrlfehd@gmail.com';
+
+INSERT INTO board
+SET regDate = NOW(),
+	title = '대답',
+	text = '대답입니다.',
+	user = '홍길순',
+	userEmail = 'ghdrlftns@gmail.com';
+
+INSERT INTO mem
+SET name = '홍길동',
+	passWord = 'ghdrlf',
+	userEmail = 'ghdrlfehd@gmail.com';
+
+INSERT INTO mem
+SET name = '홍길순',
+	passWord = 'rlftns',
+	userEmail = 'ghdrlftns@gmail.com';
+	
+	
+
 ### 각 테이블을 JOIN 을 통하여 합치는 sql
 
+SELECT B.title, B.USER
+FROM board AS B
+JOIN mem AS M
+ON B.userEmail = M.userEmail;
+
 ### 비회원으로 작성된 (게시글 테이블의 회원 id가 없는 경우) 케이스를 추가하고 이를 left join 을 통해서 출력하는sql
+SELECT * FROM board;
+SELECT * FROM mem;
 
-
-
+INSERT INTO board 
+SET regDate = NOW(),
+	title = '의문점',
+	text = '궁금합니다.',
+	USER = '비회원',
+	userEmail = 'qlghldnjs@gmail.com';
+	
+SELECT B.title, B.USER, M.userEmail
+FROM board AS B
+LEFT JOIN mem AS M
+ON B.userEmail = M.userEmail;	
