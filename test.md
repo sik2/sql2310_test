@@ -20,22 +20,23 @@ regDate DATETIME NOT NULL,
 title CHAR(100) NOT NULL,
 text TEXT NOT NULL,
 user CHAR(100) NOT NULL,
-userEmail TEXT NOT NULL UNIQUE 
+userEmail TEXT NOT NULL UNIQUE, 
+memberId int(10) NOT NULL 
 );
 
 DROP TABLE board;
 DESC board;
 SELECT *  FROM board;
 
-CREATE TABLE mem(
+CREATE TABLE `member`(
 id int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 PRIMARY KEY(id),
 name CHAR(100) NOT NULL,
-passWord TEXT NOT NULL UNIQUE,
+`password` TEXT NOT NULL UNIQUE,
 userEmail TEXT NOT NULL UNIQUE
 );
 
-SELECT * FROM mem;	
+SELECT * FROM `member`;	
 
 
 ### 테이블에 각각 테스트 데이터 2개씩 넣는 sql
@@ -45,21 +46,25 @@ SET regDate = NOW(),
 	title = '질문',
 	text = '질문있습니다.',
 	user = '홍길동',
-	userEmail = 'ghdrlfehd@gmail.com';
+	userEmail = 'ghdrlfehd@gmail.com',
+	memberId = 1;
+
+
 
 INSERT INTO board
 SET regDate = NOW(),
 	title = '대답',
 	text = '대답입니다.',
 	user = '홍길순',
-	userEmail = 'ghdrlftns@gmail.com';
+	userEmail = 'ghdrlftns@gmail.com',
+    memberId = 2;
 
-INSERT INTO mem
+INSERT INTO `member`
 SET name = '홍길동',
-	passWord = 'ghdrlf',
+	`password` = 'ghdrlf',
 	userEmail = 'ghdrlfehd@gmail.com';
 
-INSERT INTO mem
+INSERT INTO `member`
 SET name = '홍길순',
 	passWord = 'rlftns',
 	userEmail = 'ghdrlftns@gmail.com';
@@ -70,8 +75,8 @@ SET name = '홍길순',
 
 SELECT B.title, B.USER
 FROM board AS B
-JOIN mem AS M
-ON B.userEmail = M.userEmail;
+JOIN `member` AS M
+ON B.memberId = M.id;
 
 ### 비회원으로 작성된 (게시글 테이블의 회원 id가 없는 경우) 케이스를 추가하고 이를 left join 을 통해서 출력하는sql
 SELECT * FROM board;
@@ -82,9 +87,11 @@ SET regDate = NOW(),
 	title = '의문점',
 	text = '궁금합니다.',
 	USER = '비회원',
+	memberId = 0,
 	userEmail = 'qlghldnjs@gmail.com';
 	
-SELECT B.title, B.USER, M.userEmail
+SELECT B.title, B.USER, M.id
 FROM board AS B
-LEFT JOIN mem AS M
-ON B.userEmail = M.userEmail;	
+LEFT JOIN `member` AS M
+ON B.memberId = M.id;	
+
