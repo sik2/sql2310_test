@@ -14,19 +14,18 @@ DROP DATABASE service;
 ### 테이블 생성 sql
 CREATE DATABASE service;
 USE service;
-
 CREATE TABLE noticeBoard(
 id int(10) UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
 name text NOT NULL ,
 content text NOT NULL,
 regDate datetime NOT NULL,
-writer text NOT NULL);
+userId int NOT NULL);
 
 CREATE TABLE `user` (
 id int(10) UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
 name text NOT NULL,
 `password` text NOT NULL,
-email text NOT null
+eMail text NOT null
 );
 
 ### 테이블에 각각 테스트 데이터 2개씩 넣는 sql
@@ -44,34 +43,30 @@ INSERT INTO noticeBoard
 SET name = '안녕하세요~',
 content = '오늘 가입했어요~',
 regDate = now(),
-writer = '홍길동';
+userId = 1;
 
+### 각 테이블을 JOIN 을 통하여 합치는 sql
 INSERT INTO noticeBoard 
 SET name = '안녕하십니까',
 content = '오늘 가입했습니다.',
 regDate = now(),
-writer = '홍길순';
+userId = 2;
 
-### 각 테이블을 JOIN 을 통하여 합치는  <회원이 작성한 글 보기(부서에 속해있는 사람들 보기)>
-SELECT U.name AS 유저명, NB.name AS 작성글, NB.content AS 내용 FROM `user` AS U
-JOIN noticeBoard AS NB ON U.name = NB.writer;
-
-#글쓴이가 어떤사람인지 보기(사원이 어느부서에 속해있는지 보기)
-SELECT U.name AS 유저명, NB.name AS 작성글, NB.content AS 내용 FROM noticeBoard AS NB
-JOIN `user` AS U ON  NB.writer = U.name;
-
+### 각 테이블을 JOIN 을 통하여 합치는 
+SELECT NB.id AS 번호, NB.name AS 제목, NB.content AS 내용, NB.regDate AS 생성일 , u.name AS 글쓴이  FROM noticeBoard AS NB
+# 비밀번호랑 이메일까지 나타내려면  SELECT NB.id AS 번호, NB.name AS 제목, NB.content AS 내용, NB.regDate AS 생성일 , u.name AS 글쓴이, u.`password` AS 비밀번호, u.eMail AS 이메일 FROM noticeBoard AS NB
+JOIN `user` AS U ON NB.userId = U.id;
 ### 비회원으로 작성된 (게시글 테이블의 회원 id가 없는 경우) 케이스를 추가하고 이를 left join 을 통해서 출력하는sql
 INSERT INTO noticeBoard 
 SET name = '비회원 글쓰기',
 content = '비회원이 쓴 글',
 regDate = NOW(),
-writer = 0;
+userId = 0;
 
 SELECT * FROM noticeBoard ;
 
 
-# 
-SELECT U.name AS 유저명, NB.name AS 작성글, NB.content AS 내용 FROM noticeBoard AS NB
-LEFT JOIN `user` AS U ON  NB.writer = U.name;
-
-
+# 비밀번호랑 이메일까지 나타내려면  SELECT NB.id AS 번호, NB.name AS 제목, NB.content AS 내용, NB.regDate AS 생성일 , u.name AS 글쓴이, u.`password` AS 비밀번호, u.eMail AS 이메일 FROM noticeBoard AS NB
+SELECT NB.id AS 번호, NB.name AS 제목, NB.content AS 내용, NB.regDate AS 생성일 ,
+ifnull (u.name,'비회원') AS 글쓴이  FROM noticeBoard AS NB
+LEFT JOIN `user` AS U ON NB.userId = U.id;
