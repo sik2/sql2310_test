@@ -9,8 +9,7 @@ CREATE TABLE article(
 id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 title VARCHAR(100) NOT NULL,
 body TEXT NOT NULL,
-regDate DATETIME NOT NULL,
-name CHAR(30) NOT NULL
+regDate DATETIME NOT NULL
 );
 
 #3. 회원의 경우 이름, 비밀번호, 이메일로 구성이 되어있다.
@@ -37,28 +36,25 @@ SELECT * FROM user;
 INSERT INTO article
 SET title = '제목1',
 body = '내용1',
-regDate = now(),
-name = '홍길동';
+regDate = now();
 
 INSERT INTO article
 SET title = '제목2',
 body = '내용2',
-regDate = now(),
-name = '홍길순';
+regDate = now();
 
 INSERT INTO user
-SET name = '회원1',
+SET name = '홍길동',
 password = 1234,
 email = '네이버';
 
 INSERT INTO user
-SET name = '회원2',
+SET name = '홍길순',
 password = 5678,
 email = '다음';
 
 ### 각 테이블을 JOIN 을 통하여 합치는 sql
 SELECT U.name AS '회원명',
-A.name AS '작성자명',
 DATE(A.regDate) AS '작성일자',
 A.title AS '글 제목',
 A.body AS '글 내용',
@@ -73,11 +69,9 @@ ON U.id = A.id
 INSERT INTO article
 SET title = '제목3',
 body =  '내용3',
-regDate = NOW() ,
-name = '임꺽정';
+regDate = NOW();
 
 SELECT U.name AS '회원',
-A.name AS '글 작성자',
 DATE(A.regDate) AS '작성일자',
 A.title AS '글 제목',
 A.body AS '글 내용',
