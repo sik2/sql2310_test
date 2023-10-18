@@ -20,7 +20,7 @@ id int(10) UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
 name text NOT NULL ,
 content text NOT NULL,
 regDate datetime NOT NULL,
-writer int NOT NULL);
+writer text NOT NULL);
 
 CREATE TABLE `user` (
 id int(10) UNSIGNED NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
@@ -41,24 +41,24 @@ SET name = '홍길순',
 eMail = '1234@1234.1234';
 
 INSERT INTO noticeBoard 
-SET name = '안녕하세요~2',
-content = '오늘 가입했어요~2',
+SET name = '안녕하세요~',
+content = '오늘 가입했어요~',
 regDate = now(),
-writer = 1;
+writer = '홍길동';
 
 INSERT INTO noticeBoard 
-SET name = '안녕하십니까2',
-content = '오늘 가입했습니다2.',
+SET name = '안녕하십니까',
+content = '오늘 가입했습니다.',
 regDate = now(),
-writer = 2;
+writer = '홍길순';
 
 ### 각 테이블을 JOIN 을 통하여 합치는  <회원이 작성한 글 보기(부서에 속해있는 사람들 보기)>
 SELECT U.name AS 유저명, NB.name AS 작성글, NB.content AS 내용 FROM `user` AS U
-JOIN noticeBoard AS NB ON U.id = NB.writer;
+JOIN noticeBoard AS NB ON U.name = NB.writer;
 
 #글쓴이가 어떤사람인지 보기(사원이 어느부서에 속해있는지 보기)
 SELECT U.name AS 유저명, NB.name AS 작성글, NB.content AS 내용 FROM noticeBoard AS NB
-JOIN `user` AS U ON  NB.writer = U.id;
+JOIN `user` AS U ON  NB.writer = U.name;
 
 ### 비회원으로 작성된 (게시글 테이블의 회원 id가 없는 경우) 케이스를 추가하고 이를 left join 을 통해서 출력하는sql
 INSERT INTO noticeBoard 
@@ -72,5 +72,6 @@ SELECT * FROM noticeBoard ;
 
 # 
 SELECT U.name AS 유저명, NB.name AS 작성글, NB.content AS 내용 FROM noticeBoard AS NB
-LEFT JOIN `user` AS U ON  NB.writer = U.id;
+LEFT JOIN `user` AS U ON  NB.writer = U.name;
+
 
