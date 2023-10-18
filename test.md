@@ -74,10 +74,10 @@ boardName = '셋째 게시판',
 content = '내용3',
 writer = ' ';
 
-SELECT B.content AS `게시판 내용`,
+SELECT U.id AS `회원 번호`, 
+B.content AS `게시판 내용`,
 B.boardName AS '제목',
-U.userName AS `회원 아이디`,
-U.id AS `아이디`
+U.userName AS `회원 아이디`
 FROM board AS B
 LEFT JOIN USER AS U
 ON B.writer = U.userName;
