@@ -102,6 +102,6 @@ INNER JOIN board;
 
 INSERT INTO writer SET name = '비회원',  namePassword = 3333, email = 'noname@naver.com';
 
-SELECT writer.id, writer.namePassword, writer.email, board.name
+SELECT writer.name AS '작성자', writer.namePassword AS '비밀번호', writer.email AS '주소명', board.name AS '게시판명'
 FROM writer LEFT JOIN board
 ON writer.id = board.id;
