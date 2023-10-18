@@ -78,12 +78,15 @@ email = 'Hong-gil-sun@gmail.com'
 ;
 
 ### 각 테이블을 JOIN 을 통하여 합치는 sql
-SELECT A.title AS 제목, A.body AS 내용, A.regDate AS 작성일, A.userName AS 작성자, B.password AS 비밀번호, B.email AS 이메일
-FROM 회원 AS B
-INNER JOIN 게시판 AS A
-ON A.userName = B.userName;
+SELECT B.id AS 게시물ID, B.title AS 제목, B.body AS 내용, B.regDate AS 작성일,
+       A.`password` AS 비밀번호, A.email AS 이메일
+FROM 게시판 AS B
+INNER JOIN 회원 AS A
+ON B.userName = A.userName;
 
 ### 비회원으로 작성된 (게시글 테이블의 회원 id가 없는 경우) 케이스를 추가하고 이를 left join 을 통해서 출력하는sql
-SELECT A.title AS 제목, A.body AS 내용, A.regDate AS 작성일, A.userName AS 작성자, B.password AS 비밀번호, B.email AS 이메일
-FROM 게시판 AS A
-LEFT JOIN 회원 AS B ON A.userName = B.userName;
+SELECT B.id AS 게시물ID, B.title AS 제목, B.body AS 내용, B.regDate AS 작성일,
+       A.`password` AS 비밀번호, A.email AS 이메일
+FROM 게시판 AS B
+LEFT JOIN 회원 AS A
+ON B.userName = A.userName;
