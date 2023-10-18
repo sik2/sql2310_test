@@ -17,7 +17,8 @@ CREATE TABLE user(
 id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
 name CHAR(30) NOT NULL,
 password INT(10) UNSIGNED NOT NULL,
-email CHAR(30) NOT NULL
+email CHAR(30) NOT NULL,
+articleID INT(10) NOT NULL
 );
 
 SELECT * FROM article;
@@ -46,12 +47,15 @@ regDate = now();
 INSERT INTO user
 SET name = '홍길동',
 password = 1234,
-email = '네이버';
+email = '네이버',
+articleId = 1;
 
 INSERT INTO user
 SET name = '홍길순',
 password = 5678,
-email = '다음';
+email = '다음',
+articleId = 2;
+
 
 ### 각 테이블을 JOIN 을 통하여 합치는 sql
 SELECT U.name AS '작성자',
@@ -79,4 +83,4 @@ U.email AS '이메일',
 U.password AS '비밀번호'
 FROM article AS A
 LEFT JOIN user AS U
-ON U.id = A.id
+ON A.id = U.articleId;
