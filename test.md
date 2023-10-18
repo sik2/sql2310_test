@@ -54,7 +54,7 @@ password = 5678,
 email = '다음';
 
 ### 각 테이블을 JOIN 을 통하여 합치는 sql
-SELECT U.name AS '회원명',
+SELECT U.name AS '작성자',
 DATE(A.regDate) AS '작성일자',
 A.title AS '글 제목',
 A.body AS '글 내용',
@@ -71,7 +71,7 @@ SET title = '제목3',
 body =  '내용3',
 regDate = NOW();
 
-SELECT U.name AS '회원',
+SELECT U.name AS '작성자',
 DATE(A.regDate) AS '작성일자',
 A.title AS '글 제목',
 A.body AS '글 내용',
