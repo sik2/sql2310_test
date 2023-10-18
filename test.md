@@ -19,8 +19,7 @@ CREATE TABLE board(
     id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
     boardName CHAR(100) NOT NULL,
-    content VARCHAR(100) NOT NULL,
-    writer CHAR(100) NOT NULL
+    content VARCHAR(100) NOT NULL
 );
 
 SELECT * FROM board;
@@ -28,9 +27,9 @@ SELECT * FROM board;
 
 CREATE TABLE USER (
      id INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
-     userName CHAR(100) NOT NULL,
      pass CHAR(100) NOT NULL,
-     email CHAR(100) NOT NULL 
+     email CHAR(100) NOT NULL,
+     writer CHAR(100) NOT NULL
 );
 
 SELECT * FROM USER;
@@ -40,25 +39,25 @@ SELECT * FROM board;
 INSERT INTO board
 SET regDate = NOW(),
 boardName = '첫째 게시판',
-content = '내용1',
-writer = '홍길동';
+content = '내용1';
+
 
 INSERT INTO board
 SET regDate = NOW(),
 boardName = '두번째 게시판',
-content = '내용2',
-writer = '임꺽정';
+content = '내용2';
+
 
 SELECT * FROM USER;
 SELECT * FROM board;
 
 INSERT INTO USER
-SET userName = '홍길동',
+SET writer = '홍길동',
 pass = 'aa',
 email = 'aaa';
 
 INSERT INTO USER
-SET userName = '임꺽정',
+SET writer = '임꺽정',
 pass = 'bb',
 email = 'bbb';
 
@@ -71,18 +70,20 @@ JOIN board;
 INSERT INTO board
 SET regDate = NOW(),
 boardName = '셋째 게시판',
-content = '내용3',
-writer = ' ';
+content = '내용3';
 
-SELECT U.id AS `회원 번호`, 
+INSERT INTO USER
+SET writer = ' ',
+pass = ' ',
+email = ' ';
+
+SELECT B.boardName AS `제목`, 
+DATE(B.regDate) AS `작성일`,
 B.content AS `게시판 내용`,
-B.boardName AS '제목',
-U.userName AS `회원 아이디`
-FROM board AS B
-LEFT JOIN USER AS U
-ON B.writer = U.userName;
+U.writer AS `ID`
+FROM USER AS U
+LEFT JOIN board AS B
+ON B.id = U.id;
 
-
-
-
-
+SELECT * FROM USER;
+SELECT * FROM board;
