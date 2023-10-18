@@ -20,7 +20,6 @@ regDate DATETIME NOT NULL,
 title CHAR(100) NOT NULL,
 text TEXT NOT NULL,
 user CHAR(100) NOT NULL,
-userEmail TEXT NOT NULL UNIQUE, 
 memberId int(10) NOT NULL 
 );
 
@@ -46,7 +45,6 @@ SET regDate = NOW(),
 	title = '질문',
 	text = '질문있습니다.',
 	user = '홍길동',
-	userEmail = 'ghdrlfehd@gmail.com',
 	memberId = 1;
 
 
@@ -56,7 +54,6 @@ SET regDate = NOW(),
 	title = '대답',
 	text = '대답입니다.',
 	user = '홍길순',
-	userEmail = 'ghdrlftns@gmail.com',
     memberId = 2;
 
 INSERT INTO `member`
@@ -87,11 +84,9 @@ SET regDate = NOW(),
 	title = '의문점',
 	text = '궁금합니다.',
 	USER = '비회원',
-	memberId = 0,
-	userEmail = 'qlghldnjs@gmail.com';
+	memberId = 0;
 	
 SELECT B.title, B.USER, M.id
 FROM board AS B
 LEFT JOIN `member` AS M
 ON B.memberId = M.id;	
-
